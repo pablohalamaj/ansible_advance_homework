@@ -1,3 +1,9 @@
+---
+- name: Include sensitive vars
+# Lets include the vars with credentials
+# You should use --ask-vault-pass when running this playbook
+  include_vars: vars/credentials.yml
+
 - name: Create Homework Assignment project 
 # Use tower module or tower-cli to create Ansible Tower project. Name of the project is specifed in ./vars/main.yml
   tower_project:
