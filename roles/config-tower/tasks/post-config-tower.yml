@@ -1,29 +1,60 @@
 - name: Create Homework Assignment project 
 # Use tower module or tower-cli to create Ansible Tower project. Name of the project is specifed in ./vars/main.yml
+  tower_project:
+    name: "{{ proj_name | default('test')}}"
+    description: "{{ proj_description | default('Project created by Config-Tower Ansible Role')}}"
+    organization: "{{ org_name | default('Default') }}"
+    state: present
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
 
-- name: Machine Credentail to connect to workstation using openstack.pub
+- name: Machine Credential to connect to workstation using openstack.pub
   tower_credential:
-    name: Connect_to_workstation
-    organization: Default
+    name: "Connect_to_{{ host_name }}"
+    organization: "{{ org_name | default('Default') }}"
     state: present
     kind: ssh
-    tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
-    ssh_key_data: "/root/.ssh/openstack.pem"
-    username: cloud-user
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
+    ssh_key_data: "{{ user_cred_path }}"
+    username: "{{ user_cred_name }}"
 
-- name: Create Inventory
-  command: |
-    tower-cli inventory create -n "{{static_inventory_name}}" --organization "{{org_name}}"
+- name: Create Inventory {{static_inventory_name}} in Organization {{org_name}}
+  tower_inventory:
+    name: "{{static_inventory_name |default('Test')}}"
+    description: "{{ static_inventory_description | default('Test Description')}}"
+    organization: "{{org_name |default('Default')}}"
+    state: present
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
 
-- name: Create Group in static inventory 
-  command: |
-    tower-cli group create --inventory "{{static_inventory_name}}"  --name {{group_name}}
+- name: Create Group {{group_name}} in static inventory {{static_inventory_name}}
+  tower_group:
+    name: "{{group_name |default('test')}}"
+    description: "{{ group_description |default('test')}}"
+    inventory: "{{ static_inventory_name }}"
+    state: present
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
 
-- name: Add workstation host in tower_inventory 
-  command: |
-    tower-cli host create --inventory "{{static_inventory_name}}" --name "{{host_name}}"
+- name: Add host {{host_name}}  in tower_inventory {{static_inventory_name}}
+  tower_host:
+    name: "{{host_name}}"
+    description: "{{ host_description |default('Test')}}"
+    inventory: "{{static_inventory_name}}"
+    state: present
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
 
 - name: Associate workstation host to group 
   command: | 
@@ -33,14 +64,14 @@
 - name: Tower Creds key file
   tower_credential:
     name: "{{ opentlc_cred_name }}"
-    organization: Default
+    organization: "{{ org_name | default('Default') }}"
     state: present
     kind: ssh
-    tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
-    tower_verify_ssl: no
-    ssh_key_data: /root/.ssh/mykey.pem
+    tower_host: "{{ tower_host | default('localhost') }}"
+    tower_username: "{{ tower_admin | default('admin') }}"
+    tower_password: "{{ tower_password | default('password') }}"
+    validate_certs: "{{ tower_ssl_enable }}"
+    ssh_key_data: "{{ user_cred_path }}"
     username: "{{ opentlc_login }}"
 
 - name: Remove secret
