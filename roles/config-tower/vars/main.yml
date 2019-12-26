@@ -28,7 +28,6 @@ osp_instances_delete_playbook: site-osp-delete.yml
 osp_instances_playbook: site-osp-instances.yml
 osp_smoke_playbook: site-smoke-osp.yml
 path_to_scm_inventory: scm_inventory
-password: r3dh4t1!
 proj_name: "Homework Assignment"
 scm_branch: master
 scm_inventory_source: "SCM three tier inventory source"
@@ -41,6 +40,6 @@ user_cred_path: "/root/.ssh/openstack.pem"
 user_name: admin
 vault_name: yum_repo_vault
 workflow_template_name: cicd_workflow
-tower_host: "https://tower1.1ad9.example.opentlc.com"
+tower_host: "https://tower1.{{ tower_GUID }}.example.opentlc.com"
 tower_admin: "admin"
 tower_ssl_enable: false
