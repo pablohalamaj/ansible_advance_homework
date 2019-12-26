@@ -12,6 +12,8 @@
     organization: "{{ org_name | default('Default') }}"
     state: present
     tower_host: "{{ tower_host | default('localhost') }}"
+    scm_type: "git"
+    scm_url: "{{ github_repo }}"
     tower_username: "{{ tower_admin | default('admin') }}"
     tower_password: "{{ tower_password | default('password') }}"
     validate_certs: "{{ tower_ssl_enable }}"
