@@ -18,7 +18,7 @@
 
 - name: Machine Credential to connect to workstation using openstack.pub
   tower_credential:
-    name: "Connect_to_{{ host_name }}"
+    name: "{{ ssh_cred_name }}"
     organization: "{{ org_name | default('Default') }}"
     state: present
     kind: ssh

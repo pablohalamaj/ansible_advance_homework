@@ -32,7 +32,7 @@ proj_name: "Homework Assignment"
 scm_branch: master
 scm_inventory_source: "SCM three tier inventory source"
 scm_url: "{{ github_repo }}"
-ssh_cred_name: "Connect_to_workstation"
+ssh_cred_name: "Connect_to_{{ host_name }}"
 static_inventory_name: scm_inventory
 tag_filters: "tag:instance_filter=three-tier-app-{{ EMAIL }}"
 user_cred_name: "cloud-user"
