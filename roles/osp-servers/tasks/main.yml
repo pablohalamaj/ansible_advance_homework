@@ -27,6 +27,8 @@
 
 
 - name: Add floating IP to Servers
+  debug: "{{ instanceoip}}"
    
 
 - name: Wait for server to be available
+  debug: "fin"
