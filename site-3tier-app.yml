@@ -12,7 +12,6 @@
   hosts: 
     - frontends
     - tag_AnsibleGroup_frontends
-frontends
   become: yes
   roles:
     - {name: base-config, tags: base-config}
