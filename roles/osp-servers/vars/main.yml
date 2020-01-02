@@ -25,7 +25,7 @@ osp_servers:
     flavor: m2.small
     security_group: apps
     meta:
-      - { group: frontends, deployment_name: QA}
+      - { group: apps, deployment_name: QA}
   app2:
     cloud: ospcloud
     int_network: int_network
@@ -37,7 +37,7 @@ osp_servers:
     flavor: m2.small
     security_group: apps
     meta:
-      - { group: frontends, deployment_name: QA}
+      - { group: apps, deployment_name: QA}
   db:
     cloud: ospcloud
     int_network: int_network
@@ -49,4 +49,4 @@ osp_servers:
     flavor: m2.small
     security_group: db
     meta:
-      - { group: frontends, deployment_name: QA}
+      - { group: appdbs, deployment_name: QA}
