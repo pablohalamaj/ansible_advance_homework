@@ -7,25 +7,25 @@
 
 - name: Create Tomcat WEBROOT
   file:
-    path: /usr/share/tomcat/webapps/ROOT
+    path: "{{ app-tier-root }}/ROOT"
     state: directory
 
 - name: copy static index.html to tomcat webapps/ansible/index.html
   template:
     src: templates/index.html.j2
-    dest: /usr/share/tomcat/webapps/ROOT/index.html
+    dest: "{{ app-tier-root }}/ROOT/index.html"
   notify:
     - restart tomcat
 
 - name: create Ansible directory
   file:
-    path: /usr/share/tomcat/webapps/ansible
+    path: "{{ app-tier-root }}/ansible"
     state: directory
 
 - name: copy static index.html to tomcat webapps/ansible/index.html
   template:
     src: templates/index.html.j2
-    dest: /usr/share/tomcat/webapps/ansible/index.html
+    dest: "{{ app-tier-root }}/ansible/index.html"
 
 
 - name: enable Tomcat
